@@ -47,6 +47,10 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -80,11 +84,9 @@
                                 <unzip
                                     src="${project.build.directory}/arc-benchmarks-1.0.jar"
                                     dest="${project.build.directory}/tmp" />
-                                <copy
-                                    todir="${project.build.directory}/tmp">
-                                    <fileset
-                                        dir="${project.build.directory}/wiring-classes" />
-                                </copy>
+                                <unzip
+                                    src="${project.build.directory}/arc-benchmarks-1.0-runner.jar"
+                                    dest="${project.build.directory}/tmp" />
                                 <zip
                                     basedir="${project.build.directory}/tmp"
                                     destfile="${project.build.directory}/arc-benchmarks-1.0.jar" />
