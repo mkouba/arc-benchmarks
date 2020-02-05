@@ -34,8 +34,17 @@ public class SubclassInstantiationBenchmark {
     }
 
     @Benchmark
-    public String instantiateDependentSublass() throws InterruptedException {
+    public String simpleSubclass() throws InterruptedException {
         String ret = container.instance(InterceptedBean.class).get().ping();
+        if (!ret.equals("ok!")) {
+            throw new IllegalStateException("Incorrect ping result: " + ret);
+        }
+        return ret;
+    }
+
+    @Benchmark
+    public String complexSubclass() throws InterruptedException {
+        String ret = container.instance(ComplexInterceptedBean.class).get().ping1();
         if (!ret.equals("ok!")) {
             throw new IllegalStateException("Incorrect ping result: " + ret);
         }

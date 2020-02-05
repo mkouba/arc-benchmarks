@@ -14,7 +14,6 @@ import org.openjdk.jmh.annotations.Warmup;
 import io.quarkus.arc.Arc;
 
 @BenchmarkMode(Mode.Throughput)
-//@BenchmarkMode(Mode.SingleShotTime)
 @Fork(5)
 @Warmup(iterations = 5, time = 1, batchSize = 8192)
 @Measurement(iterations = 5, time = 1, batchSize = 8192)
