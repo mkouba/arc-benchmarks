@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSIONS="1.2.0.Final 999-SNAPSHOT";
+VERSIONS="1.3.1.Final 999-SNAPSHOT"
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"
@@ -9,13 +9,15 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="SingleInterceptorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark"
+    BENCHMARKS="SingleInterceptorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ClientProxyInvocationBenchmark"
 fi
 
-echo "Versions: $VERSIONS";
+echo "Versions: $VERSIONS"
 echo "Benchmarks to run: $BENCHMARKS"
 
-VERSIONS_ARRAY=$(echo $VERSIONS);
+mvn clean
+
+VERSIONS_ARRAY=$(echo $VERSIONS)
 
 for i in $VERSIONS_ARRAY
 do
