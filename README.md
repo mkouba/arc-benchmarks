@@ -26,7 +26,8 @@ One easy way is to put the Async Profiler native library to the Java native libr
 Note that the JMH integration of Async Profiler currently (as of JMH 1.29) does _not_ work well with Async Profiler 2.0 (output types `flamegraph` and `jfr` at least don't produce anything).
 That's why we use 1.8.5 here.
 
-
+Also, there are some preparations necessary before running Async Profiler.
+Please read https://github.com/jvm-profiling-tools/async-profiler/#basic-usage.
 
 ```bash
 java -Djava.library.path=./async-profiler-1.8.5-linux-x64/build -jar target/benchmarks.jar -f 1 -prof async:output=flamegraph SingleInterceptorBenchmark
