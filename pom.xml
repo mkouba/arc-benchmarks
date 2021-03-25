@@ -89,7 +89,7 @@
                                     src="${project.build.directory}/arc-benchmarks-1.0.jar"
                                     dest="${project.build.directory}/tmp" />
                                 <unzip
-                                    src="${project.build.directory}/arc-benchmarks-1.0-runner.jar"
+                                    src="${project.build.directory}/quarkus-app/quarkus/generated-bytecode.jar"
                                     dest="${project.build.directory}/tmp" />
                                 <zip
                                     basedir="${project.build.directory}/tmp"

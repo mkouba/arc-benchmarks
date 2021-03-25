@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSIONS="1.6.1.Final 999-SNAPSHOT"
+VERSIONS="999-SNAPSHOT"
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"
@@ -9,7 +9,7 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="SingleInterceptorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ClientProxyInvocationBenchmark"
+    BENCHMARKS="SingleInterceptorBenchmark|SingleDecoratorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ClientProxyInvocationBenchmark"
 fi
 
 echo "Versions: $VERSIONS"
