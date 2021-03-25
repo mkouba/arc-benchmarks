@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <jmh.version>1.21</jmh.version>
+        <jmh.version>1.29</jmh.version>
         <quarkus.version>999-SNAPSHOT</quarkus.version>
         <uberjar.name>benchmarks</uberjar.name>
     </properties>
