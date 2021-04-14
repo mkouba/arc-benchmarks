@@ -16,8 +16,8 @@ import io.quarkus.arc.ArcContainer;
 
 @BenchmarkMode(Mode.Throughput)
 @Fork(5)
-@Warmup(iterations = 5, time = 1)
-@Measurement(iterations = 5, time = 1)
+@Warmup(iterations = 5, time = 1, batchSize = 1024)
+@Measurement(iterations = 5, time = 1, batchSize = 1024)
 @State(Scope.Benchmark)
 public class SubclassInstantiationBenchmark {
 

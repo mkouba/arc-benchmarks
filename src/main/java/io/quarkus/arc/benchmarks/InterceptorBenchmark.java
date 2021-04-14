@@ -18,16 +18,22 @@ import io.quarkus.arc.Arc;
 @Warmup(iterations = 5, time = 1, batchSize = 8192)
 @Measurement(iterations = 5, time = 1, batchSize = 8192)
 @State(Scope.Benchmark)
-public class SingleInterceptorBenchmark {
+public class InterceptorBenchmark {
 
-    private SimpleBean bean;
+    private SimpleBean simpleBean;
+
+    private ComplexInterceptedBean complexBean;
 
     @Setup
     public void setup() {
         Arc.initialize();
-        bean = Arc.container().instance(SimpleBean.class).get();
-        if (bean == null) {
+        simpleBean = Arc.container().instance(SimpleBean.class).get();
+        if (simpleBean == null) {
             throw new IllegalStateException("SimpleBean not found");
+        }
+        complexBean = Arc.container().instance(ComplexInterceptedBean.class).get();
+        if (complexBean == null) {
+            throw new IllegalStateException("ComplexInterceptedBean not found");
         }
     }
 
@@ -37,9 +43,18 @@ public class SingleInterceptorBenchmark {
     }
 
     @Benchmark
-    public String run() throws InterruptedException {
-        String ret = bean.ping();
+    public String simple() throws InterruptedException {
+        String ret = simpleBean.ping();
         if (!ret.equals("ok!")) {
+            throw new IllegalStateException("Incorrect result: " + ret);
+        }
+        return ret;
+    }
+
+    @Benchmark
+    public String complex() throws InterruptedException {
+        String ret = complexBean.go10();
+        if (!ret.equals("Hi!")) {
             throw new IllegalStateException("Incorrect result: " + ret);
         }
         return ret;

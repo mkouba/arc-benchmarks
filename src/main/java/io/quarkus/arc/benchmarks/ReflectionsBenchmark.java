@@ -16,8 +16,8 @@ import io.quarkus.arc.impl.Reflections;
 
 @BenchmarkMode(Mode.Throughput)
 @Fork(5)
-@Warmup(iterations = 3, time = 1)
-@Measurement(iterations = 5, time = 1)
+@Warmup(iterations = 3, time = 1, batchSize = 8192)
+@Measurement(iterations = 5, time = 1, batchSize = 8192)
 @State(Scope.Benchmark)
 public class ReflectionsBenchmark {
 
