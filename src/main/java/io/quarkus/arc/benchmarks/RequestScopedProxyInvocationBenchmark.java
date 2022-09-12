@@ -20,19 +20,14 @@ import io.quarkus.arc.ManagedContext;
 @Warmup(iterations = 5, time = 1, batchSize = 8192)
 @Measurement(iterations = 5, time = 1, batchSize = 8192)
 @State(Scope.Benchmark)
-public class ClientProxyInvocationBenchmark {
+public class RequestScopedProxyInvocationBenchmark {
 
-    private SimpleAppScopedBean appBean;
     private SimpleReqScopedBean reqBean;
     private ManagedContext requestContext;
 
     @Setup
     public void setup() {
         ArcContainer container = Arc.initialize();
-        appBean = container.instance(SimpleAppScopedBean.class).get();
-        if (appBean == null) {
-            throw new IllegalStateException("SimpleAppScopedBean not found");
-        }
         reqBean = container.instance(SimpleReqScopedBean.class).get();
         if (reqBean == null) {
             throw new IllegalStateException("SimpleAppScopedBean not found");
@@ -47,20 +42,17 @@ public class ClientProxyInvocationBenchmark {
 
     @Benchmark
     public String run() throws InterruptedException {
-        String appRet = appBean.ping();
-        if (!appRet.equals("ok")) {
-            throw new IllegalStateException("Incorrect result: " + appRet);
-        }
+        String ret;
         try {
             requestContext.activate();
-            String reqRet = reqBean.ping();
-            if (!reqRet.equals("ok")) {
-                throw new IllegalStateException("Incorrect result: " + reqRet);
+            ret = reqBean.ping();
+            if (!ret.equals("ok")) {
+                throw new IllegalStateException("Incorrect result: " + ret);
             }
         } finally {
             requestContext.terminate();
         }
-        return appRet;
+        return ret;
     }
 
 }

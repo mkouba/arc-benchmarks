@@ -9,7 +9,7 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="InterceptorBenchmark|SingleDecoratorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ClientProxyInvocationBenchmark"
+    BENCHMARKS="InterceptorBenchmark|SingleDecoratorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ApplicationScopedProxyInvocationBenchmark|RequestScopedProxyInvocationBenchmark|ContextProviderBenchmark"
 fi
 
 echo "Versions: $VERSIONS"
