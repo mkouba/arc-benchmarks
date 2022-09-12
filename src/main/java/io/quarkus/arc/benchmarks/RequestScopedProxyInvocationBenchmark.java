@@ -23,7 +23,26 @@ import io.quarkus.arc.ManagedContext;
 public class RequestScopedProxyInvocationBenchmark {
 
     private SimpleReqScopedBean reqBean;
-    private ManagedContext requestContext;
+
+    // this state object ensures that the request context is activate for each run
+    // we do not want to activate/terminate the request contex per each run but merely test the proxy invocation itself
+    @State(Scope.Thread)
+    public static class ContextActivator {
+
+        private ManagedContext requestContext;
+
+        @Setup
+        public void doSetup() {
+            requestContext = Arc.container().requestContext();
+            requestContext.activate();
+        }
+
+        @TearDown
+        public void doTearDown() {
+            requestContext.terminate();
+        }
+
+    }
 
     @Setup
     public void setup() {
@@ -32,7 +51,6 @@ public class RequestScopedProxyInvocationBenchmark {
         if (reqBean == null) {
             throw new IllegalStateException("SimpleAppScopedBean not found");
         }
-        requestContext = container.requestContext();
     }
 
     @TearDown
@@ -41,16 +59,10 @@ public class RequestScopedProxyInvocationBenchmark {
     }
 
     @Benchmark
-    public String run() throws InterruptedException {
-        String ret;
-        try {
-            requestContext.activate();
-            ret = reqBean.ping();
-            if (!ret.equals("ok")) {
-                throw new IllegalStateException("Incorrect result: " + ret);
-            }
-        } finally {
-            requestContext.terminate();
+    public String run(ContextActivator contextActivator) throws InterruptedException {
+        String ret = reqBean.ping();
+        if (!ret.equals("ok")) {
+            throw new IllegalStateException("Incorrect result: " + ret);
         }
         return ret;
     }
