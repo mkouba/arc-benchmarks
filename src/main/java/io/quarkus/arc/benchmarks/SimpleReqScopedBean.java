@@ -1,13 +1,12 @@
 package io.quarkus.arc.benchmarks;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Singleton;
+import javax.enterprise.context.RequestScoped;
 
 import io.quarkus.arc.Unremovable;
 
 @Unremovable
-@ApplicationScoped
-public class SimpleNormalScopedBean {
+@RequestScoped
+public class SimpleReqScopedBean {
 
     public String ping() {
         return "ok";

@@ -12,6 +12,8 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Warmup;
 
 import io.quarkus.arc.Arc;
+import io.quarkus.arc.ArcContainer;
+import io.quarkus.arc.ManagedContext;
 
 @BenchmarkMode(Mode.Throughput)
 @Fork(5)
@@ -20,15 +22,22 @@ import io.quarkus.arc.Arc;
 @State(Scope.Benchmark)
 public class ClientProxyInvocationBenchmark {
 
-    private SimpleNormalScopedBean bean;
+    private SimpleAppScopedBean appBean;
+    private SimpleReqScopedBean reqBean;
+    private ManagedContext requestContext;
 
     @Setup
     public void setup() {
-        Arc.initialize();
-        bean = Arc.container().instance(SimpleNormalScopedBean.class).get();
-        if (bean == null) {
-            throw new IllegalStateException("SimpleNormalScopedBean not found");
+        ArcContainer container = Arc.initialize();
+        appBean = container.instance(SimpleAppScopedBean.class).get();
+        if (appBean == null) {
+            throw new IllegalStateException("SimpleAppScopedBean not found");
         }
+        reqBean = container.instance(SimpleReqScopedBean.class).get();
+        if (reqBean == null) {
+            throw new IllegalStateException("SimpleAppScopedBean not found");
+        }
+        requestContext = container.requestContext();
     }
 
     @TearDown
@@ -38,11 +47,20 @@ public class ClientProxyInvocationBenchmark {
 
     @Benchmark
     public String run() throws InterruptedException {
-        String ret = bean.ping();
-        if (!ret.equals("ok")) {
-            throw new IllegalStateException("Incorrect result: " + ret);
+        String appRet = appBean.ping();
+        if (!appRet.equals("ok")) {
+            throw new IllegalStateException("Incorrect result: " + appRet);
         }
-        return ret;
+        try {
+            requestContext.activate();
+            String reqRet = reqBean.ping();
+            if (!reqRet.equals("ok")) {
+                throw new IllegalStateException("Incorrect result: " + reqRet);
+            }
+        } finally {
+            requestContext.terminate();
+        }
+        return appRet;
     }
 
 }
