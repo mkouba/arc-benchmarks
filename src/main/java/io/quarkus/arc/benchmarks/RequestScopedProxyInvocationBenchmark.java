@@ -49,7 +49,7 @@ public class RequestScopedProxyInvocationBenchmark {
         ArcContainer container = Arc.initialize();
         reqBean = container.instance(SimpleReqScopedBean.class).get();
         if (reqBean == null) {
-            throw new IllegalStateException("SimpleAppScopedBean not found");
+            throw new IllegalStateException("SimpleReqScopedBean not found");
         }
     }
 
