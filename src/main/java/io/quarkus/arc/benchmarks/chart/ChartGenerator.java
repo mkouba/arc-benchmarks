@@ -86,7 +86,7 @@ public class ChartGenerator {
             }
         });
 
-        CategoryChart chart = new CategoryChartBuilder().width(1280).height(1024).title("ArC Microbenchmarks")
+        CategoryChart chart = new CategoryChartBuilder().width(1920).height(1080).title("ArC Microbenchmarks")
                 .xAxisTitle("Benchmarks")
                 .yAxisTitle("Ops/s").build();
         chart.getStyler().setXAxisTicksVisible(true).setXAxisLabelRotation(90);

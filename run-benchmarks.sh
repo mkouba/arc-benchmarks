@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSIONS="2.11.3.Final 2.12.1.Final 999-SNAPSHOT"
+VERSIONS="2.16.1.Final 999-SNAPSHOT"
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"
