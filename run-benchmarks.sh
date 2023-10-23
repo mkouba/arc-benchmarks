@@ -1,6 +1,7 @@
 #!/bin/sh
 
-VERSIONS="2.16.1.Final 999-SNAPSHOT"
+#VERSIONS="3.2.7.Final 3.5.0 999-SNAPSHOT"
+VERSIONS="3.5.0 999-SNAPSHOT"
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"
@@ -9,7 +10,7 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="InterceptorBenchmark|SingleDecoratorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ApplicationScopedProxyInvocationBenchmark|RequestScopedProxyInvocationBenchmark|ContextProviderBenchmark|RequestContextActivationBenchmark"
+    BENCHMARKS="InterceptorBenchmark|SingleDecoratorBenchmark|ReflectionsBenchmark|SubclassInstantiationBenchmark|ApplicationScopedProxyInvocationBenchmark|RequestScopedProxyInvocationBenchmark|ContextProviderBenchmark|RequestContextActivationBenchmark|BeanManagerGetBeansBenchmark"
 fi
 
 echo "Versions: $VERSIONS"

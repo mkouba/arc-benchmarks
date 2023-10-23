@@ -1,6 +1,6 @@
 package io.quarkus.arc.benchmarks;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 import io.quarkus.arc.Unremovable;
 

@@ -12,7 +12,7 @@ import io.quarkus.qute.Template;
 public class Generator {
 
     private static String APP_BEAN = "package io.quarkus.arc.benchmarks.appbeans;\n"
-            + "import javax.enterprise.context.ApplicationScoped;\n"
+            + "import jakarta.enterprise.context.ApplicationScoped;\n"
             + "import io.quarkus.runtime.Startup;\n"
             + "\n"
             + "@ApplicationScoped\n"

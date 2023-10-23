@@ -1,6 +1,6 @@
 package io.quarkus.arc.benchmarks;
 
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 
 import io.quarkus.arc.Unremovable;
 
