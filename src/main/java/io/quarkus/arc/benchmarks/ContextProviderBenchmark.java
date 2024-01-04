@@ -7,14 +7,18 @@ import java.util.Map;
 import org.eclipse.microprofile.context.spi.ThreadContextController;
 import org.eclipse.microprofile.context.spi.ThreadContextSnapshot;
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.TearDown;
+import org.openjdk.jmh.annotations.Warmup;
 
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.ArcContainer;
 import io.quarkus.arc.ManagedContext;
 import io.quarkus.arc.runtime.context.ArcContextProvider;
 
+@Warmup(batchSize = 1024)
+@Measurement(batchSize = 1024)
 public class ContextProviderBenchmark extends BenchmarkBase {
 
     private ArcContainer container;
