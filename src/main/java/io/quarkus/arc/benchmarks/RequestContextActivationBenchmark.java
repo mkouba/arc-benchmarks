@@ -15,12 +15,9 @@ import io.quarkus.arc.Arc;
 import io.quarkus.arc.ArcContainer;
 import io.quarkus.arc.ManagedContext;
 
-@BenchmarkMode(Mode.Throughput)
-@Fork(5)
-@Warmup(iterations = 5, time = 1, batchSize = 8192)
-@Measurement(iterations = 5, time = 1, batchSize = 8192)
-@State(Scope.Benchmark)
-public class RequestContextActivationBenchmark {
+@Warmup(batchSize = 8)
+@Measurement(batchSize = 8)
+public class RequestContextActivationBenchmark extends BenchmarkBase {
 
     private ManagedContext requestContext;
 

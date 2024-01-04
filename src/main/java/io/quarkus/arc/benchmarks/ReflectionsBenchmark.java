@@ -4,22 +4,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
 import io.quarkus.arc.impl.Reflections;
 
-@BenchmarkMode(Mode.Throughput)
-@Fork(5)
-@Warmup(iterations = 3, time = 1, batchSize = 8192)
-@Measurement(iterations = 5, time = 1, batchSize = 8192)
-@State(Scope.Benchmark)
-public class ReflectionsBenchmark {
+@Warmup(batchSize = 8192)
+@Measurement(batchSize = 8192)
+public class ReflectionsBenchmark extends BenchmarkBase {
 
     @Benchmark
     public Field findField() throws InterruptedException {
