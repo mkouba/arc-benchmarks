@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
@@ -101,6 +102,11 @@ public class ChartGenerator {
                 JsonObject benchmark = jsonElement.getAsJsonObject();
                 String[] parts = benchmark.get("benchmark").getAsString().split("\\.");
                 String benchmarkName = parts[parts.length - 2] + "." + parts[parts.length - 1];
+                JsonObject params = benchmark.getAsJsonObject("params");
+                if (params != null) {
+                    benchmarkName += params.asMap().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue().getAsString())
+                            .collect(Collectors.joining(",", "[", "]"));
+                }
                 allBenchmarks.add(benchmarkName);
                 benchmarkMap.put(benchmarkName, benchmark);
             }
