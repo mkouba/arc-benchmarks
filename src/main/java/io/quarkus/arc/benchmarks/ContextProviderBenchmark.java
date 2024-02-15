@@ -41,7 +41,7 @@ public class ContextProviderBenchmark extends BenchmarkBase {
         ManagedContext requestContext = container.requestContext();
         requestContext.activate();
         // Make sure the request scoped bean is created
-        assertEquals("ok", container.instance(RequestBean.class).get().ping());
+        assertEquals("ok", container.instance(SimpleReqScopedBean1.class).get().ping());
         try {
             ThreadContextSnapshot snapshot = contextProvider.currentContext(Map.of());
             ThreadContextController controller = snapshot.begin();

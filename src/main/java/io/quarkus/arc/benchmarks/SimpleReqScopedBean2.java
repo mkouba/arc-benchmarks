@@ -4,9 +4,9 @@ import jakarta.enterprise.context.RequestScoped;
 
 import io.quarkus.arc.Unremovable;
 
-@RequestScoped
 @Unremovable
-public class RequestBean {
+@RequestScoped
+public class SimpleReqScopedBean2 {
 
     public String ping() {
         return "ok";

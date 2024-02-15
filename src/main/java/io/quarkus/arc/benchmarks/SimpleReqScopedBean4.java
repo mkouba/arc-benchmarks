@@ -6,7 +6,7 @@ import io.quarkus.arc.Unremovable;
 
 @Unremovable
 @RequestScoped
-public class SimpleReqScopedBean {
+public class SimpleReqScopedBean4 {
 
     public String ping() {
         return "ok";

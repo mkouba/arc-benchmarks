@@ -20,13 +20,21 @@ public class RequestContextBenchmark extends BenchmarkBase {
     public int work;
 
     private ManagedContext requestContext;
-    private SimpleReqScopedBean simpleReqScopedBean;
+    private SimpleReqScopedBean1 simpleBean1;
+    private SimpleReqScopedBean2 simpleBean2;
+    private SimpleReqScopedBean3 simpleBean3;
+    private SimpleReqScopedBean4 simpleBean4;
+    private SimpleReqScopedBean5 simpleBean5;
 
     @Setup
     public void setup() {
         ArcContainer container = Arc.initialize();
         requestContext = container.requestContext();
-        simpleReqScopedBean = container.select(SimpleReqScopedBean.class).get();
+        simpleBean1 = container.select(SimpleReqScopedBean1.class).get();
+        simpleBean2 = container.select(SimpleReqScopedBean2.class).get();
+        simpleBean3 = container.select(SimpleReqScopedBean3.class).get();
+        simpleBean4 = container.select(SimpleReqScopedBean4.class).get();
+        simpleBean5 = container.select(SimpleReqScopedBean5.class).get();
     }
 
     @TearDown
@@ -42,7 +50,11 @@ public class RequestContextBenchmark extends BenchmarkBase {
         requestContext.activate();
         try {
             for (int i = 0; i < work; i++) {
-                blackhole.consume(simpleReqScopedBean.ping());
+                blackhole.consume(simpleBean1.ping());
+                blackhole.consume(simpleBean2.ping());
+                blackhole.consume(simpleBean3.ping());
+                blackhole.consume(simpleBean4.ping());
+                blackhole.consume(simpleBean5.ping());
             }
         } finally {
             requestContext.terminate();

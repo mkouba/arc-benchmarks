@@ -16,7 +16,7 @@ import io.quarkus.arc.ManagedContext;
 @Measurement(batchSize = 8192)
 public class RequestScopedProxyInvocationBenchmark extends BenchmarkBase {
 
-    private SimpleReqScopedBean reqBean;
+    private SimpleReqScopedBean1 reqBean;
 
     // this state object ensures that the request context is activate for each run
     // we do not want to activate/terminate the request contex per each run but merely test the proxy invocation itself
@@ -41,7 +41,7 @@ public class RequestScopedProxyInvocationBenchmark extends BenchmarkBase {
     @Setup
     public void setup() {
         ArcContainer container = Arc.initialize();
-        reqBean = container.instance(SimpleReqScopedBean.class).get();
+        reqBean = container.instance(SimpleReqScopedBean1.class).get();
         if (reqBean == null) {
             throw new IllegalStateException("SimpleReqScopedBean not found");
         }
