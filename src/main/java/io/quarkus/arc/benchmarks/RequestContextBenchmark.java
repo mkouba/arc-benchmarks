@@ -16,8 +16,8 @@ import io.quarkus.arc.ManagedContext;
 @Measurement(batchSize = 1024)
 public class RequestContextBenchmark extends BenchmarkBase {
 
-    @Param({ "1", "10", "100" })
-    public int work;
+    @Param({ "1", "3", "5" })
+    public int beans;
 
     private ManagedContext requestContext;
     private SimpleReqScopedBean1 simpleBean1;
@@ -30,6 +30,7 @@ public class RequestContextBenchmark extends BenchmarkBase {
     public void setup() {
         ArcContainer container = Arc.initialize();
         requestContext = container.requestContext();
+        // Obtain the client proxies
         simpleBean1 = container.select(SimpleReqScopedBean1.class).get();
         simpleBean2 = container.select(SimpleReqScopedBean2.class).get();
         simpleBean3 = container.select(SimpleReqScopedBean3.class).get();
@@ -45,16 +46,45 @@ public class RequestContextBenchmark extends BenchmarkBase {
     @Benchmark
     public void run(Blackhole blackhole) throws InterruptedException {
         // 1. Activate the context
-        // 2. Invoke a client proxy method of a @RequestScoped bean
+        // 2. Invoke a client proxy method of some @RequestScoped beans
         // 3. Terminate the context
         requestContext.activate();
         try {
-            for (int i = 0; i < work; i++) {
-                blackhole.consume(simpleBean1.ping());
-                blackhole.consume(simpleBean2.ping());
-                blackhole.consume(simpleBean3.ping());
-                blackhole.consume(simpleBean4.ping());
-                blackhole.consume(simpleBean5.ping());
+            if (beans == 1) {
+                // 1 x 15 client proxy invocations
+                for (int i = 0; i < 15; i++) {
+                    blackhole.consume(simpleBean1.ping());
+                }
+            } else if (beans == 3) {
+                // 3 x 5 client proxy invocations
+                int loop = 5;
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean1.ping());
+                }
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean2.ping());
+                }
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean3.ping());
+                }
+            } else if (beans == 5) {
+                // 5 x 3 client proxy invocations
+                int loop = 3;
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean1.ping());
+                }
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean2.ping());
+                }
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean3.ping());
+                }
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean4.ping());
+                }
+                for (int i = 0; i < loop; i++) {
+                    blackhole.consume(simpleBean5.ping());
+                }
             }
         } finally {
             requestContext.terminate();
