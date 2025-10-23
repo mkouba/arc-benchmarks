@@ -12,9 +12,9 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
 @BenchmarkMode(Mode.Throughput)
-@Fork(3)
-@Warmup(iterations = 3, time = 1)
-@Measurement(iterations = 3, time = 1)
+@Fork(5)
+@Warmup(iterations = 5, time = 1)
+@Measurement(iterations = 5, time = 1)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 public abstract class BenchmarkBase {
